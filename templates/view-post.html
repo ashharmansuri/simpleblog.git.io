@@ -69,7 +69,7 @@
             <div class="row ml-5 mt-4 reply_container">
                 {% for reply in com.replies.all %}
                 <div class="col-md-1">
-                    <img src="{{com.user.profile.image.url}}" alt="" width='30' height="30">
+                    <img src="{{reply.user.profile.image.url}}" alt="" width='30' height="30">
                 </div>
                 <div class="col-md-11">
                      
