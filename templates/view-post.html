@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block title%}
+    <title>View Post</title>
+{% endblock title%}
+{% block content%}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-3 text-capitalize">{{posts.title}}</h1>
+        <h5 class="text-capitalize my-4"><i>Written By -</i>&nbsp; {{posts.author.get_full_name}}</h5>
+        <hr class="my-2">
+        <p>{{posts.posted_date}}</p>
+
+        <form action="{%url 'like-post' posts.id %}" method="POST" class="mt-4">
+            {% csrf_token %}
+            
+            {% if user.is_authenticated%}
+            {% if is_liked %}
+                <button type="submit" class="btn btn-danger px-3" name="posts_id" value="{{posts.id}}">
+                {{total_likes}} &nbsp; | &nbsp; Liked
+                </button>
+               
+            {% else %}
+                <button type="submit" class="btn btn-primary px-3" name="posts_id" value="{{posts.id}}">
+                {{total_likes}} &nbsp;  | &nbsp; Like{{total_likes|pluralize}}</button>
+                
+            {% endif%}    
+            {% endif%}
+        </form>
+        
+    </div>
+    
+</div>
+<div class="container">
+    <p class="desc_p text-justify mb-4">{{posts.description}}</p>
+</div>
+
+<div class="container">
+    <h2 class="mb-2">{{comments.count}} Comment{{comments|pluralize}}</h2>
+    {% if user.is_authenticated %}
+    <form action="" method="POST" class="form-inline my-2 my-lg-0">
+        {%csrf_token%}
+      <input class="form-control mr-sm-2" id="comment"  name="comment" type="text" placeholder="Write Comment here....">
+      <input type="hidden" name="postId" value="{{post.id}}">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Comment</button>
+    </form>
+    {%endif%}
+
+    <div class="row mt-4">
+        {% for com in comments%}
+        <div class="col-md-1">
+            <img src="{{com.user.profile.image.url}}" alt="" width='50' height="50">
+        </div>
+        <div class="col-md-11">
+             
+             <blockquote class="blockquote">
+                <p class="mb-0">{{com.comment}}</p>
+                <footer class="blockquote-footer">Comment by <cite title="Source Title">{{com.user.get_full_name}}</cite>
+                   
+                </footer>
+                <button class="btn btn-sm btn-outline-info px-3 ml-3 font-weight-bold reply_btn">reply</button>
+              </blockquote>
+            
+        </div>
+
+        <!---reply comment section-->
+
+        <div class="replied-comments col-md-12 my-2" style="display: none;">
+
+            <div class="row ml-5 mt-4 reply_container">
+                {% for reply in com.replies.all %}
+                <div class="col-md-1">
+                    <img src="{{com.user.profile.image.url}}" alt="" width='30' height="30">
+                </div>
+                <div class="col-md-11">
+                     
+                     <blockquote class="blockquote">
+                        <p class="mb-0 font">{{reply.comment}}</p>
+                        <footer class="blockquote-footer font">reply by <cite title="Source Title">{{reply.user|capfirst}}</cite></footer>
+                      </blockquote>
+                     <!-- Reply -->
+                </div>
+                {%endfor%}
+            </div>    
+            <div class="form-group">
+                <form action="" method="POST" class="form-inline my-2 my-lg-0">
+                    {%csrf_token%}
+                  <input class="form-control mr-sm-2" id="reply"  name="comment" type="text" placeholder="Reply ......">
+                  <input type="hidden" name="com_id" value="{{com.id}}">
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Reply</button>
+                </form>
+            </div>
+  
+            
+
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+
+<div class="container my-3">
+    <a class="mt-5 btn-back d-block" href="{% url 'home' %}">
+        <i class="fas fa-arrow-circle-left"></i> Back to Home
+    </a>
+
+ </div>
+{% endblock%}

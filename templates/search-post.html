@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title%}
+    <title>Search</title>
+{% endblock title%}
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="my-3"><i>Search Results :-</i></h3>
+            {% if posts|length < 1 %}
+            <p class="suggestion">No data found related to search - &nbsp;<b>{{search_query}}</b></p>
+            <p class="suggestion">suggestions:</p>
+            <ul>
+                <li>Make sure that all words are spelled correctly.</li>
+                <li>Try different keywords.</li>
+                <li>Try more general keywords.</li>
+            </ul>
+            {% endif%}
+        </div>
+        
+        <div class="col-sm-12 mx-auto main_content">
+            {% for post in posts%}
+            <div class="media bg-light p-3 m-3">
+                    <img src="{{post.author.profile.image.url}}" class="mr-3 pro_image" alt="..." width='64' height="64">
+                    <div class="media-body">
+                    <h4 class="mt-0 text-capitalize">{{post.author.get_full_name}}</h4>
+                    <a href="{% url 'view-post' post.id %}" id="title_search" class="text-uppercase d-block">{{post.title}}</a>
+                    <small class="text-muted my-2">{{post.posted_date}}</small>
+                    <p class="text">{{post.description}}</p>
+                    </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock%}

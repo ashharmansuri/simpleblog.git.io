@@ -1,0 +1,113 @@
+a.nav-link {
+    margin-left: 50px!important;
+    font-size: 18px!important;
+}
+.text {
+    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#registerform input {
+    margin-top: 15px!important;
+}
+form.postform {
+    padding: 25px;
+    border: 1px solid #007bff;
+}
+span#user_name {
+    font-size: 20px;
+    font-weight: 600;
+}
+img.pro_image {
+    border: 5px solid gray!important;
+    /* object-fit: fill; */
+}
+img.img-fluid.account_img {
+    height: 350px!important;
+}
+
+p.desc_p {
+    font-size: 20px;
+    letter-spacing: 2px;
+    word-spacing: 8px;
+}
+a.btn-back {
+    font-size: 20px!important;
+}
+
+p.suggestion {
+    font-size: 20px;
+}
+.avatar {
+    height: 80vh!important;
+}
+span#follow {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+/* profile page */
+.profile {
+    margin: 20px 0;
+  }
+  
+  /* Profile sidebar */
+  .inner_container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 80vh;
+    
+}
+.profile_img_section {
+    
+    width: 40%;
+    height: 100%;
+}
+.profile_img_section img {
+    width: 100%;
+    height: 100%;
+}
+.profile_info_section {
+    border: 1px solid lightgray;
+    width: 60%;
+    height: 100%;
+}
+span.display-0 {
+    font-weight: 500!important;
+    font-size: 40px!important;
+}
+ul.intro li {
+    list-style: none;
+    font-size: 19px;
+    font-weight: 500;
+    margin-top:10px;
+}
+ul.intro li i {
+    width: 30px!important;
+}
+span.dark_col {
+    color: black;
+}
+span#about_text {
+    font-size: 17px;
+    font-family: cursive;
+}
+/**comment**/
+input#comment {
+    width: 75%;
+}
+input#reply {
+    margin-left: 90px;
+    width: 35%;
+}
+.font {
+    font-size: 13px;
+}
+.reply_btn {
+    font-size: 18px!important;
+    cursor: pointer;
+}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title%}
+    <title>Dashboard</title>
+{% endblock title%}
+{% block content%}
+<div class="container">
+   <div class="row mt-3 d-flex justify-content-between">
+           <div class=" col-md-4 ">
+                   <div class="alert alert-primary">Dashboard</div>
+                   
+           </div>
+
+           <div class=" col-md-4 ">
+                
+                <a href="{% url 'add-post' %}" class="btn btn-primary px-5 d-block">Add New Post</a>
+           </div>
+   </div>
+   <div class="row mt-2">
+        <div class=" col-md-12">
+           <h4 class="alert alert-primary text-center" >Your All Post</h4>
+        </div>
+        <div class="col-md-12">
+                {% if allposts %}
+                {% for allpost in allposts %}
+                <div class="card m-2">
+                    <div class="card-body">
+                        <h4 class="card-title text-capitalize">{{allpost.title}}</h4>
+                        <p class="card-text">{{allpost.description}}</p>
+                        <p class="card-text"><small>{{allpost.posted_date}}</small></p>
+                        <div class="d-flex align-items-center">
+                            <a href="{%url 'edit-post' allpost.id%}" id="edit" class="btn btn-info px-4">Edit</a>
+                            <a href="{%url 'delete-post' allpost.id%}" id="del" class="btn btn-danger ml-3">Delete</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                {%else%}
+                 <h4 class="text-capitalize text-center mt-2">You have not made any post yet .....</h4>
+                 
+                {%endif%}
+
+                
+        </div>
+</div>
+    
+</div>
+
+{% endblock%}
