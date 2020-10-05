@@ -28,6 +28,8 @@ STATUS_CHOICES =[
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     image = models.ImageField(default='download.png',upload_to='profileimg')
+    follower =models.IntegerField(default =0)
+    following = models.IntegerField(default =0)
     about = models.TextField(null=True,blank=True)
     status = models.CharField(max_length=200,null=True,choices=STATUS_CHOICES)
     qualification = models.CharField(max_length=90,blank=True)
@@ -49,3 +51,23 @@ class BlogComment(models.Model):
     def __str__(self):
        return '{}-{}'.format(self.post.title, str(self.user.username))
 
+
+class Following(models.Model):
+    ''' following of the user '''
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    followed = models.ManyToManyField(User,related_name='followed')
+
+    @classmethod
+    def follow(cls,user,another_account):
+        obj,create = cls.objects.get_or_create(user=user)
+        obj.followed.add(another_account)
+        print("followed")
+
+    @classmethod
+    def unfollow(cls,user,another_account):
+        obj,create = cls.objects.get_or_create(user=user)
+        obj.followed.remove(another_account)
+        print("unfollowed")  
+
+        def __str__(self):
+            return str(self.user)

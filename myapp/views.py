@@ -1,13 +1,14 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse,HttpResponseRedirect,response
 from .forms import UserRegisterForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout, authenticate,update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from .models import Post,Profile,BlogComment
+from .models import Post,Profile,BlogComment,Following
 from .forms import PostForm,ProfileForm,UserUpdateForm,FormPasswordChange
 from django.views.generic import ListView
 from django.urls import reverse
+import json
 
 
 # Create your views here.
@@ -159,23 +160,29 @@ def account_settings(request):
     return render(request,'account-settings.html',context)
 
 
-#post-comment views
-# def post_comment(request):
-#     if request.method=="POST":
-#         comment = request.POST.get('comment')
-#         user = request.user
-#         post_id = request.POST.get('postId')
-#         post = Post.objects.get(pk=pk)
 
-#         comment = BlogComment(comment=comment,user=user,post=post)
-#         comment.save()
+# def follow(request,pk):
+#     main_user = request.user
+#     to_follow = User.objects.get(id=pk)
 
-#         return redirect('view-post/{post.id}')
+#     following = Following.objects.filter(user=main_user,followed=to_follow)
+#     is_following =True if following else False
+    
+#     if is_following:
+#         Following.unfollow(main_user,to_follow)
+#         is_following =False
+#     else:
+#         Following.follow(main_user,to_follow)
+#         is_following = True    
 
-#     post = Post.objects.filter(pk=pk)
-#     comments = BlogComment.objects.filter(post=post)
-#     context ={'post':post,'comments':comments}
-#     return render(request,'view-post.html',context)
+
+#     resp ={
+#         'following':is_following
+#     }
+#     response = json.dumps(resp)
+#     return HttpResponse(response,content_type="application/json")
+
+
 
 
 
@@ -212,6 +219,7 @@ def user_login(request):
 
 def profile(request,pk):
     user_profile = User.objects.get(id=pk)
+    pro = Profile.objects.filter(user=user_profile)
     context = {'user_profile':user_profile}
     return render(request,'profile_page.html',context)
 

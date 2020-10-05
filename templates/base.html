@@ -58,6 +58,14 @@
           {%endif%}
         </div>
       </nav>
+
+      {% if messages %}
+        {%for message in messages%}
+
+        {%endfor%}
+      {% endif%}
+
+
     {% block content%}
 
     {% endblock%}

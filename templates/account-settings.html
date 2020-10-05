@@ -27,7 +27,9 @@
                  {% csrf_token %}
                  
                  {% for ufm in uform %}
+
                  {{ufm.label_tag}} {{ufm}} {{ufm.errors|striptags}}
+                 
                  {%endfor%}
 
 
