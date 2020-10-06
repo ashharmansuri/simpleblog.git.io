@@ -161,26 +161,26 @@ def account_settings(request):
 
 
 
-# def follow(request,pk):
-#     main_user = request.user
-#     to_follow = User.objects.get(id=pk)
+def follow(request,pk):
+    main_user = request.user
+    to_follow = User.objects.get(id=pk)
 
-#     following = Following.objects.filter(user=main_user,followed=to_follow)
-#     is_following =True if following else False
+    following = Following.objects.filter(user=main_user,followed=to_follow)
+    is_following =True if following else False
     
-#     if is_following:
-#         Following.unfollow(main_user,to_follow)
-#         is_following =False
-#     else:
-#         Following.follow(main_user,to_follow)
-#         is_following = True    
+    if is_following:
+        Following.unfollow(main_user,to_follow)
+        is_following =False
+    else:
+        Following.follow(main_user,to_follow)
+        is_following = True    
 
 
-#     resp ={
-#         'following':is_following
-#     }
-#     response = json.dumps(resp)
-#     return HttpResponse(response,content_type="application/json")
+    resp ={
+        'following':is_following
+    }
+    response = json.dumps(resp)
+    return HttpResponse(response,content_type="application/json")
 
 
 
@@ -219,8 +219,12 @@ def user_login(request):
 
 def profile(request,pk):
     user_profile = User.objects.get(id=pk)
-    pro = Profile.objects.filter(user=user_profile)
-    context = {'user_profile':user_profile}
+
+    is_following = Following.objects.filter(user=request.user, followed= user_profile)
+    following_obj =Following.objects.get(user=user_profile)
+    followed = following_obj.followed.count()
+    follower = following_obj.follower.count()
+    context = {'user_profile':user_profile,'relationship':is_following,'followed':followed,'follower':follower}
     return render(request,'profile_page.html',context)
 
 def user_logout(request):

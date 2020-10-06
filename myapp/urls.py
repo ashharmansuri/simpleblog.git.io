@@ -21,5 +21,5 @@ urlpatterns = [
     # path('post-comment',views.post_comment,name='post-comment'),
 
     path('account-settings',views.account_settings,name='account-settings'),
-    # path('user/follow/<int:pk>',views.follow,name='user-follow')
+    path('user/follow/<int:pk>',views.follow,name='user-follow')
 ]
