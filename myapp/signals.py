@@ -24,18 +24,18 @@ def add_follower(sender,instance,action,reverse,pk_set, **kwrags):
     pk_set = set of primary key of users whom i have followed
     """
     followed_users = [] #list of users (logged) user have followed
-    logged_user = User.objects.get(id=pk)
+    logged_user = User.objects.get(id=instance)
     for i in pk_set:
         user = User.objects.get(pk=i)
         following_obj = Following.objects.get(user=user)
         followed_users.append(following_obj)
 
-    if action == 'pre_add':
+    if action == "pre_add":
         for i in followed_users:
             i.follower.add(logged_user)
             i.save()
    
-    if action == 'pre_remove':
+    if action == "pre_remove":
         for i in followed_users:
             i.follower.remove(logged_user)
             i.save()
